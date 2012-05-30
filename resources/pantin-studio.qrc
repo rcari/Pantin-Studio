@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/pantin-studio">
+	<file>images/icons/nigel.png</file>
+	<file>images/splash.png</file>
+</qresource>
+</RCC>
