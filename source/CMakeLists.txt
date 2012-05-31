@@ -1,101 +1,97 @@
-CMAKE_MINIMUM_REQUIRED ( VERSION 2.6 )
+CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 
-PROJECT ( Pantin-Studio C CXX )
+PROJECT( Pantin-Studio C CXX )
 
-SET ( PantinStudio_Version "0.0.1" )
+SET( PantinStudio_Version "0.0.1" )
+
+IF( CMAKE_BUILD_TYPE )
+	IF( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
+		MESSAGE( "Building DEBUG binaries" )
+		SET( DEBUG_BUILD ON )
+		#SET( CMAKE_VERBOSE_MAKEFILE ON )
+		SET( DEBUG_DEFINES "K_DEBUG" )
+	ELSE( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
+		MESSAGE( "Building RELEASE binaries" )					
+		SET( DEBUG_BUILD OFF )
+	ENDIF( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
+ELSE( CMAKE_BUILD_TYPE )
+	MESSAGE( "Building RELEASE binaries" )
+	SET( DEBUG_BUILD OFF )
+ENDIF( CMAKE_BUILD_TYPE )
 
 IF( APPLE )
-	INCLUDE( "build/CMake/MacOS.cmake" )
+	INCLUDE( "build/CMake/platforms/MacOS.cmake" )
 ELSE( UNIX )
-	INCLUDE( "build/CMake/Linux-GCC.cmake" )
-ELSEIF ( MINGW )
-	INCLUDE( "build/CMake/MinGW.cmake" )
-ELSE ( APPLE )
-	INCLUDE( "build/CMake/VisualStudio.cmake" )
-ENDIF ( MINGW )
-
-IF ( CMAKE_BUILD_TYPE )
-	IF ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
-		MESSAGE ( "Building DEBUG binaries" )
-		SET ( DEBUG_BUILD ON )
-		#SET ( CMAKE_VERBOSE_MAKEFILE ON )
-		SET ( DEBUG_DEFINES "K_DEBUG" )
-	ELSE ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
-		MESSAGE ( "Building RELEASE binaries" )					
-		SET ( DEBUG_BUILD OFF )
-	ENDIF ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
-ELSE ( CMAKE_BUILD_TYPE )
-	MESSAGE ( "Building RELEASE binaries" )
-	SET ( DEBUG_BUILD OFF )
-ENDIF ( CMAKE_BUILD_TYPE )
+	INCLUDE( "build/CMake/platforms/Linux-GCC.cmake" )
+ELSEIF( MINGW )
+	INCLUDE( "build/CMake/platforms/MinGW.cmake" )
+ELSE( APPLE )
+	INCLUDE( "build/CMake/platforms/VisualStudio.cmake" )
+ENDIF( APPLE )
 
 # -- Qt 4.8.0 minimum --
-FIND_PACKAGE ( Qt4 4.8.0 COMPONENTS QtCore QtGui QtOpenGL QtXml REQUIRED )
-# -- Configure Qt for PantinStudio --
-SET ( QT_USE_QTOPENGL ON )
-SET ( QT_USE_QTXML ON )
-INCLUDE ( ${QT_USE_FILE} )
+FIND_PACKAGE( Qt4 4.8.0 COMPONENTS QtCore QtGui QtOpenGL QtXml REQUIRED )
+# -- Activate proper modules --
+SET( QT_USE_QTOPENGL ON )
+SET( QT_USE_QTXML ON )
+INCLUDE( ${QT_USE_FILE} )
 
 # -- Doxygen --
-FIND_PACKAGE ( Doxygen )
+FIND_PACKAGE( Doxygen )
 
 # -- OpenGL --
-FIND_PACKAGE ( OpenGL REQUIRED )
+FIND_PACKAGE( OpenGL REQUIRED )
 
 # -- Resources Qt --
-QT4_ADD_RESOURCES (
+QT4_ADD_RESOURCES(
 	PantinStudio_RCC
 	../resources/pantin-studio.qrc
-	../externals/Kore/resources/kore.qrc
-	../externals/Gooey/resources/gooey.qrc
-	../externals/Nigel/resources/nigel.qrc
-	../externals/Pantin/resources/pantin.qrc
+	#../externals/Kore/resources/kore.qrc
+	#../externals/Gooey/resources/gooey.qrc
+	#../externals/Nigel/resources/nigel.qrc
+	#../externals/Pantin/resources/pantin.qrc
 )
 
+# -- Module loading tools --
+INCLUDE( "build/CMake/LoadModule.cmake" )
+
 # -- Kore --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Kore/build ${CMAKE_CURRENT_BINARY_DIR}/Kore )
-SET ( KORE_INCLUDE_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Kore/inc ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Kore )
-INCLUDE_DIRECTORIES ( ${KORE_INCLUDE_PATHS} )
+LOAD_MODULE( Kore 0.0.1 )
 
 # -- Nigel --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Nigel/build ${CMAKE_CURRENT_BINARY_DIR}/Nigel )
-SET ( NIGEL_INCLUDE_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Nigel/inc ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Nigel )
-INCLUDE_DIRECTORIES ( ${NIGEL_INCLUDE_PATHS} )
+#LOAD_MODULE( Nigel 0.0.1 )
 
-# -- glew --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/glew/build ${CMAKE_CURRENT_BINARY_DIR}/glew )
-SET ( GLEW_INCLUDE_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/../externals/glew/include )
-INCLUDE_DIRECTORIES ( ${GLEW_INCLUDE_PATHS} )
-
-# -- GLr --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/GLr/build ${CMAKE_CURRENT_BINARY_DIR}/GLr )
-SET ( GLR_INCLUDE_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/../externals/GLr/inc ${CMAKE_CURRENT_SOURCE_DIR}/../externals/GLr )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/GLr/inc )
+# -- GLare --
+#LOAD_MODULE( GLare 0.0.1 )
 
 # -- Gooey --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Gooey/build ${CMAKE_CURRENT_BINARY_DIR}/Gooey )
-SET ( GOOEY_INCLUDE_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Gooey/inc ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Gooey )
-INCLUDE_DIRECTORIES ( ${GOOEY_INCLUDE_PATHS} )
+#LOAD_MODULE( Gooey 0.0.1 )
 
 # -- Pantin --
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Pantin/build ${CMAKE_CURRENT_BINARY_DIR}/Pantin )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/../externals/Pantin/inc )
+#LOAD_MODULE( Pantin 0.0.1 )
 
-# Headers
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/../inc )
 
-### ------------- PantinStudio -------------
-FILE ( GLOB PantinStudio_SRCS	${CMAKE_CURRENT_SOURCE_DIR} ../src/*.cpp )
+
+### ------------- PantinStudio ------------- 
+
+# Inclusion paths
+INCLUDE_DIRECTORIES( inc )
+
+# Source files
+SET( PantinStudio_SRCS	src/Pantin.cpp )
 
 # Target executable: PantinStudio
 # Mac OS specifics
-IF ( APPLE )
-	ADD_EXECUTABLE ( PantinStudio MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns )
-	SET ( MACOSX_BUNDLE_ICON_FILE nigel.icns )
-	SET_SOURCE_FILES_PROPERTIES ( ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+IF( APPLE )
+	SET( MACOSX_BUNDLE_ICON_FILE nigel.icns )
+	SET_SOURCE_FILES_PROPERTIES( ../resources/images/icons/nigel.icns
+		PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	
+	ADD_EXECUTABLE( PantinStudio MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns )
+		
 	SET_TARGET_PROPERTIES ( 
 		PantinStudio PROPERTIES
-		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\";_K_MACX;${DEBUG_DEFINES}"
+		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\""
 	)
 	TARGET_LINK_LIBRARIES ( PantinStudio Kore Nigel GLr Gooey Pantin ${QT_LIBRARIES} )
 # Windows specifics
