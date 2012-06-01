@@ -56,7 +56,7 @@ QT4_ADD_RESOURCES(
 INCLUDE( "build/CMake/LoadModule.cmake" )
 
 # -- Kore --
-LOAD_MODULE( Kore 0.0.1 )
+PFROG_FIND_MODULE( Kore 0.0.1 )
 
 # -- Nigel --
 #LOAD_MODULE( Nigel 0.0.1 )
