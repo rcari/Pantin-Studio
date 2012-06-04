@@ -59,16 +59,16 @@ INCLUDE( "build/CMake/LoadModule.cmake" )
 PFROG_FIND_MODULE( Kore 0.0.1 )
 
 # -- Nigel --
-#LOAD_MODULE( Nigel 0.0.1 )
+PFROG_FIND_MODULE( Nigel 0.0.1 )
 
 # -- GLare --
-#LOAD_MODULE( GLare 0.0.1 )
+#PFROG_FIND_MODULE( GLare 0.0.1 )
 
 # -- Gooey --
-#LOAD_MODULE( Gooey 0.0.1 )
+#PFROG_FIND_MODULE( Gooey 0.0.1 )
 
 # -- Pantin --
-#LOAD_MODULE( Pantin 0.0.1 )
+#PFROG_FIND_MODULE( Pantin 0.0.1 )
 
 
 
@@ -82,35 +82,35 @@ SET( PantinStudio_SRCS	src/Pantin.cpp )
 
 # Target executable: PantinStudio
 # Mac OS specifics
-IF( APPLE )
-	SET( MACOSX_BUNDLE_ICON_FILE nigel.icns )
-	SET_SOURCE_FILES_PROPERTIES( ../resources/images/icons/nigel.icns
-		PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-	
-	ADD_EXECUTABLE( PantinStudio MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns )
-		
-	SET_TARGET_PROPERTIES ( 
-		PantinStudio PROPERTIES
-		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\""
-	)
-	TARGET_LINK_LIBRARIES ( PantinStudio Kore Nigel GLr Gooey Pantin ${QT_LIBRARIES} )
+#IF( APPLE )
+#	SET( MACOSX_BUNDLE_ICON_FILE nigel.icns )
+#	SET_SOURCE_FILES_PROPERTIES( ../resources/images/icons/nigel.icns
+#		PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+#	
+#	ADD_EXECUTABLE( PantinStudio MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns )
+#		
+#	SET_TARGET_PROPERTIES ( 
+#		PantinStudio PROPERTIES
+#		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\""
+#	)
+#	TARGET_LINK_LIBRARIES ( PantinStudio Kore Nigel GLr Gooey Pantin ${QT_LIBRARIES} )
 # Windows specifics
-ELSEIF ( WIN32 )
-	ADD_EXECUTABLE ( PantinStudio WIN32 ${PantinStudio_SRCS} ${PantinStudio_RCC} )
-	SET_TARGET_PROPERTIES ( 
-		PantinStudio PROPERTIES
-		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\";_K_WIN32;${DEBUG_DEFINES}"
-	)
-	TARGET_LINK_LIBRARIES ( PantinStudio Kore GLr Pantin ${QT_CORE_LIBRARY} ${QT_GUI_LIBRARY} ${QT_QTMAIN_LIBRARY} )
+#ELSEIF ( WIN32 )
+#	ADD_EXECUTABLE ( PantinStudio WIN32 ${PantinStudio_SRCS} ${PantinStudio_RCC} )
+#	SET_TARGET_PROPERTIES ( 
+#		PantinStudio PROPERTIES
+#		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\";_K_WIN32;${DEBUG_DEFINES}"
+#	)
+#	TARGET_LINK_LIBRARIES ( PantinStudio Kore GLr Pantin ${QT_CORE_LIBRARY} ${QT_GUI_LIBRARY} ${QT_QTMAIN_LIBRARY} )
 # Linux specifics
-ELSEIF ( UNIX )
-	ADD_EXECUTABLE ( PantinStudio ${PantinStudio_SRCS} ${PantinStudio_RCC} )
-	SET_TARGET_PROPERTIES ( 
-		PantinStudio PROPERTIES
-		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\";_K_UNIX;${DEBUG_DEFINES}"
-	)
-	TARGET_LINK_LIBRARIES ( PantinStudio Kore GLr Pantin ${QT_CORE_LIBRARY} ${QT_GUI_LIBRARY} )
-ENDIF ( APPLE )
+#ELSEIF ( UNIX )
+#	ADD_EXECUTABLE ( PantinStudio ${PantinStudio_SRCS} ${PantinStudio_RCC} )
+#	SET_TARGET_PROPERTIES ( 
+#		PantinStudio PROPERTIES
+#		COMPILE_DEFINITIONS "_PANTIN_STUDIO_VERSION=\"${PantinStudio_Version}\";_K_UNIX;${DEBUG_DEFINES}"
+#	)
+#	TARGET_LINK_LIBRARIES ( PantinStudio Kore GLr Pantin ${QT_CORE_LIBRARY} ${QT_GUI_LIBRARY} )
+#ENDIF ( APPLE )
 
 # Configuring the debug environment
 IF ( MSVC )
