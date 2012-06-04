@@ -57,18 +57,19 @@ INCLUDE( "build/CMake/LoadModule.cmake" )
 
 # -- Kore --
 PFROG_FIND_MODULE( Kore 0.0.1 )
+message( "Kore Version: ${KORE_VERSION_STRING}" )
 
 # -- Nigel --
-#LOAD_MODULE( Nigel 0.0.1 )
+PFROG_FIND_MODULE( Nigel 0.0.1 )
 
 # -- GLare --
-#LOAD_MODULE( GLare 0.0.1 )
+#PFROG_FIND_MODULE( GLare 0.0.1 )
 
 # -- Gooey --
-#LOAD_MODULE( Gooey 0.0.1 )
+#PFROG_FIND_MODULE( Gooey 0.0.1 )
 
 # -- Pantin --
-#LOAD_MODULE( Pantin 0.0.1 )
+#PFROG_FIND_MODULE( Pantin 0.0.1 )
 
 
 
