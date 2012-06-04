@@ -10,3 +10,11 @@
 *.lai
 *.la
 *.a
+
+# Eclipse files
+.project
+.cproject
+
+# Build folders
+build
+build64
