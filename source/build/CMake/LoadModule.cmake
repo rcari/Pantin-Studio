@@ -1,65 +1,42 @@
 ##
-## Add a Pixelfr0g module, checking for name and version
+## Sandboxed version test
 ##
-function( pfrog_add_module name version path )
-	string( TOUPPER ${name} _module_name )
-	set( PFROG_ADDING_MODULE ON )
-	if( EXISTS ${path}/build/ModuleInfos.cmake )
-		include( ${path}/build/ModuleInfos.cmake )
-		if( ${MODULE_NAME} STREQUAL ${name} )
-			# TODO: Check for version match ! (Major MUST MATCH!!)
-			add_subdirectory( ${path} ${CMAKE_CURRENT_BINARY_DIR}/modules/${name} )
-			set( ${_module_name}_VERSION_MAJOR ${${_module_name}_VERSION_MAJOR} PARENT_SCOPE )
-			set( ${_module_name}_VERSION_MINOR ${${_module_name}_VERSION_MINOR} PARENT_SCOPE )
-			set( ${_module_name}_VERSION_PATCH ${${_module_name}_VERSION_PATCH} PARENT_SCOPE )
-			set( ${_module_name}_VERSION_BUILD ${${_module_name}_VERSION_BUILD} PARENT_SCOPE )
-			set( ${_module_name}_VERSION_STRING ${${_module_name}_VERSION_STRING} PARENT_SCOPE )
-			set( ${_module_name}_INCLUDE_DIRS ${${_module_name}_INCLUDE_DIRS} PARENT_SCOPE )
-			set( ${_module_name}_DEFINITIONS ${${_module_name}_DEFINITIONS} PARENT_SCOPE )
-			set( ${_module_name}_ROOT_DIR ${${_module_name}_ROOT_DIR} PARENT_SCOPE )
-		else()
-			message( FATAL_ERROR 
-				"Not the right module: \"${MODULE_NAME}\" instead of \"${name}\" in \"${path}\"" )
-		endif( ${MODULE_NAME} STREQUAL ${name} )
+function( pfrog_check_version name path version )
+	include( ${path}/source/build/ModuleInfos.cmake )
+	if( ${name} STREQUAL ${MODULE_NAME} )
+		# TODO !!
 	else()
-		message( FATAL_ERROR 
-			"Invalid pixelfr0g module layout for \"${name}\" in \"${path}\"" )
-	endif( EXISTS ${path}/build/ModuleInfos.cmake )
-endfunction( pfrog_add_module )
+		message( FATAL_ERROR "Expected module ${name} but found ${MODULE_NAME} in ${path}" )
+	endif( ${name} STREQUAL ${MODULE_NAME} )
+	  
+endfunction( pfrog_check_version name path version ) 
 
 ##
-## Find a Pixelfr0g module, using different techniques
+## Add a Pixelfr0g module, checking for name and version
 ##
 function( pfrog_find_module name version )
 	string( TOUPPER ${name} _module_name )
-	if( ${_module_name}_SRC_PATH )
-		# If provided on configure, building the module from source
-		pfrog_add_module( ${name} ${version} ${${_module_name}_SRC_PATH} )
-		# Build variables
+	if( PFROG_DEV_MODE )
+		# Check if a specific path is given on configure
+		if( NOT ${_module_name}_SRC_PATH )
+			set( ${_module_name}_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../lib${name} ) 
+		endif( NOT ${_module_name}_SRC_PATH )
+		
+		# Check version
+		pfrog_check_version( ${name} ${${_module_name}_SRC_PATH} ${version} )
+		
+		# Add that subdirectory
+		add_subdirectory( ${${_module_name}_SRC_PATH}/source ${${_module_name}_BUILD_DIR} )
+		
+		# The module was found
 		set( ${_module_name}_FOUND ON PARENT_SCOPE )
-		set( ${_module_name}_VERSION_MAJOR ${${_module_name}_VERSION_MAJOR} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_MINOR ${${_module_name}_VERSION_MINOR} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_PATCH ${${_module_name}_VERSION_PATCH} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_BUILD ${${_module_name}_VERSION_BUILD} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_STRING ${${_module_name}_VERSION_STRING} PARENT_SCOPE )
-		set( ${_module_name}_INCLUDE_DIRS ${${_module_name}_INCLUDE_DIRS} PARENT_SCOPE )
-		set( ${_module_name}_DEFINITIONS ${${_module_name}_DEFINITIONS} PARENT_SCOPE )
-		set( ${_module_name}_ROOT_DIR ${${_module_name}_ROOT_DIR} PARENT_SCOPE )
-	elseif( EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../lib${name}/source/CMakeLists.txt )
-		# Trying to find a default "dev" layout, building the module from source
-		pfrog_add_module( ${name} ${version} ${CMAKE_CURRENT_SOURCE_DIR}/../../lib${name}/source )
-		# Build variables
-		set( ${_module_name}_FOUND ON PARENT_SCOPE )
-		set( ${_module_name}_VERSION_MAJOR ${${_module_name}_VERSION_MAJOR} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_MINOR ${${_module_name}_VERSION_MINOR} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_PATCH ${${_module_name}_VERSION_PATCH} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_BUILD ${${_module_name}_VERSION_BUILD} PARENT_SCOPE )
-		set( ${_module_name}_VERSION_STRING ${${_module_name}_VERSION_STRING} PARENT_SCOPE )
-		set( ${_module_name}_INCLUDE_DIRS ${${_module_name}_INCLUDE_DIRS} PARENT_SCOPE )
-		set( ${_module_name}_DEFINITIONS ${${_module_name}_DEFINITIONS} PARENT_SCOPE )
-		set( ${_module_name}_ROOT_DIR ${${_module_name}_ROOT_DIR} PARENT_SCOPE )
+		
+		# Setup all the modules variables in the calling scope
+		foreach( var ${${_module_name}_EXPORT_VARIABLES} )
+			set( ${var} ${${var}} PARENT_SCOPE )
+		endforeach( var ${_module_name}_EXPORT_VARIABLES )
 	else()
-		# Trying to find an installed version on the system
-		find_package( ${name} ${version} REQUIRED )
-	endif( ${_module_name}_SRC_PATH )
-endfunction( pfrog_find_module )
+		# Use the CMake find_package, it's a standalone build... 
+		find_package( ${name} ${version} )
+	endif( PFROG_DEV_MODE )
+endfunction ( pfrog_find_module name version )

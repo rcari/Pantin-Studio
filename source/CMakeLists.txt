@@ -39,19 +39,6 @@ INCLUDE( ${QT_USE_FILE} )
 # -- Doxygen --
 FIND_PACKAGE( Doxygen )
 
-# -- OpenGL --
-FIND_PACKAGE( OpenGL REQUIRED )
-
-# -- Resources Qt --
-QT4_ADD_RESOURCES(
-	PantinStudio_RCC
-	../resources/pantin-studio.qrc
-	#../externals/Kore/resources/kore.qrc
-	#../externals/Gooey/resources/gooey.qrc
-	#../externals/Nigel/resources/nigel.qrc
-	#../externals/Pantin/resources/pantin.qrc
-)
-
 # -- Module loading tools --
 INCLUDE( "build/CMake/LoadModule.cmake" )
 
@@ -70,7 +57,15 @@ PFROG_FIND_MODULE( Nigel 0.0.1 )
 # -- Pantin --
 #PFROG_FIND_MODULE( Pantin 0.0.1 )
 
-
+# -- Resources Qt --
+QT4_ADD_RESOURCES(
+	PantinStudio_RCC
+	../resources/pantin-studio.qrc
+	${KORE_QT_RESOURCES_FILE}
+	${NIGEL_QT_RESOURCES_FILE}
+	#../externals/Gooey/resources/gooey.qrc
+	#../externals/Pantin/resources/pantin.qrc
+)
 
 ### ------------- PantinStudio ------------- 
 
