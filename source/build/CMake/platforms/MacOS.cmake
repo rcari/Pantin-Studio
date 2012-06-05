@@ -1,5 +1,5 @@
 # Build architectures
-SET( CMAKE_OSX_ARCHITECTURES "i386;x86_64" )
+SET( CMAKE_OSX_ARCHITECTURES "x86_64" )
 
 # Compilation additional flags
 IF( CMAKE_COMPILER_IS_GNUCXX ) 
