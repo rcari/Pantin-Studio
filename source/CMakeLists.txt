@@ -49,10 +49,10 @@ PFROG_FIND_MODULE( Kore 0.0.1 )
 PFROG_FIND_MODULE( Nigel 0.0.1 )
 
 # -- GLare --
-#PFROG_FIND_MODULE( GLare 0.0.1 )
+PFROG_FIND_MODULE( GLare 0.0.1 )
 
 # -- Gooey --
-#PFROG_FIND_MODULE( Gooey 0.0.1 )
+PFROG_FIND_MODULE( Gooey 0.0.1 )
 
 # -- Pantin --
 #PFROG_FIND_MODULE( Pantin 0.0.1 )
