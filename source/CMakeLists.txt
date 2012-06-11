@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
+CMAKE_MINIMUM_REQUIRED( VERSION 2.8.3 )
 
 PROJECT( Pantin-Studio C CXX )
 
@@ -66,7 +66,6 @@ QT4_ADD_RESOURCES(
 )
 
 ### ------------- PantinStudio ------------- 
-
 INCLUDE( build/CMake/ProgramInfos.cmake )
 
 # Inclusion paths
