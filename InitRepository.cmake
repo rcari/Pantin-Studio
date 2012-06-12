@@ -22,4 +22,12 @@ pfrog_clone_module(libNigel)
 pfrog_clone_module(libGLare)
 pfrog_clone_module(libPantin)
 
-message( "Successful!" ) 
+if( UNIX )
+    message( "Generating project in build!" ) 
+    set( BUILD_FOLDER ${CMAKE_CURRENT_LIST_DIR}/build )
+    execute_process( COMMAND cmake -E make_directory "${BUILD_FOLDER}" )
+    
+    message( "Generating project!" )
+    execute_process( COMMAND cmake "${CMAKE_CURRENT_LIST_DIR}/source" -DPFROG_DEV_MODE=1 WORKING_DIRECTORY "${BUILD_FOLDER}" )
+endif( UNIX )
+
