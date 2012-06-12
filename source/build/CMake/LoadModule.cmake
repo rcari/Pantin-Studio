@@ -19,7 +19,7 @@ function( pfrog_find_module name version )
 	if( PFROG_DEV_MODE )
 		# Check if a specific path is given on configure
 		if( NOT ${_module_name}_SRC_PATH )
-			set( ${_module_name}_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../lib${name} ) 
+			set( ${_module_name}_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../modules/lib${name} ) 
 		endif( NOT ${_module_name}_SRC_PATH )
 		
 		# Check version
