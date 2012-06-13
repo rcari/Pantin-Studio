@@ -6,7 +6,7 @@ find_package( Git REQUIRED )
 
 function( pfrog_clone_module name )
 	message( "Cloning ${name}" )
-	execute_process( COMMAND ${GIT_EXECUTABLE} clone git@github.com:rcari/${name}.git "${MODULES_FOLDER}/${name}" OUTPUT_VARIABLE result OUTPUT_QUIET )
+	execute_process( COMMAND ${GIT_EXECUTABLE} clone git@github.com:rcari/${name}.git "${MODULES_FOLDER}/${name}" OUTPUT_VARIABLE result OUTPUT_QUIET ERROR_QUIET )
 	if(result)
 		message( "Failed!" FATAL_ERROR )
 	endif(result)
