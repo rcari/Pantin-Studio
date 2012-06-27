@@ -50,6 +50,9 @@ using namespace Pantin;
 #endif
 using namespace Gooey;
 
+#include <QtCore/QDateTime>
+#include <QtCore/QtDebug>
+
 #include <QtGui/QApplication>
 #include <QtGui/QSplashScreen>
 
@@ -63,6 +66,10 @@ int main(int argc, char** argv)
 	QCoreApplication::setOrganizationDomain("pixelfr0g.com");
 	QCoreApplication::setApplicationName("Pantin Studio");
 	QCoreApplication::setApplicationVersion(_PANTIN_STUDIO_VERSION);
+
+	qDebug("------------------------------------------------------------");
+	qDebug() << " Pantin-Studio / Starting up on" << QDateTime::currentDateTime().toString();
+	qDebug("------------------------------------------------------------");
 
 #ifdef _K_MACX
 	QApplication::setStyle(new common::GooeyStyle());
@@ -101,6 +108,8 @@ int main(int argc, char** argv)
 	splash.showMessage("Loading Pantin...", Qt::AlignLeft | Qt::AlignBottom);
 	PantinApplication pantin(splash);
 	splash.showMessage("Loading Pantin... OK", Qt::AlignLeft | Qt::AlignBottom);
+
+	qDebug() << "Pantin-Studio /" << "Showtime !";
 
 	int result = app.exec();
 
