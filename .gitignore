@@ -14,8 +14,8 @@
 # Eclipse files
 .project
 .cproject
+.settings
 
 # Build folders
 build
 build64
-
