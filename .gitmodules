@@ -1,0 +1,15 @@
+[submodule "modules/libKore"]
+	path = modules/libKore
+	url = git@github.com:rcari/libKore.git
+[submodule "modules/libGooey"]
+	path = modules/libGooey
+	url = git@github.com:rcari/libGooey.git
+[submodule "modules/libNigel"]
+	path = modules/libNigel
+	url = git@github.com:rcari/libNigel.git
+[submodule "modules/libGLare"]
+	path = modules/libGLare
+	url = git@github.com:rcari/libGLare.git
+[submodule "modules/libPantin"]
+	path = modules/libPantin
+	url = git@github.com:rcari/libPantin.git
