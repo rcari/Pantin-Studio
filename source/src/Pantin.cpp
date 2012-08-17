@@ -81,6 +81,8 @@ int main(int argc, char** argv)
 	splash.setVisible(true);
 	splash.raise();
 
+	app.processEvents();
+
 	splash.showMessage("Loading Kore...", Qt::AlignLeft | Qt::AlignBottom);
 	KoreApplication kore(argc, argv);
 	splash.showMessage("Loading Kore... OK", Qt::AlignLeft | Qt::AlignBottom);
