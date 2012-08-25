@@ -37,6 +37,9 @@ INCLUDE( ${QT_USE_FILE} )
 # -- Doxygen --
 FIND_PACKAGE( Doxygen )
 
+# -- Pantin Studio --
+INCLUDE( "build/CMake/ProgramInfos.cmake" )
+
 # -- Module loading tools --
 INCLUDE( "build/CMake/LoadModule.cmake" )
 
