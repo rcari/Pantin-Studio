@@ -45,9 +45,7 @@ using namespace GLr;
 using namespace Pantin;
 
 #include <GooeyApplication.hpp>
-#ifdef _K_MACX
 #include <common/GooeyStyle.hpp>
-#endif
 using namespace Gooey;
 
 #include <QtCore/QDateTime>
@@ -56,10 +54,11 @@ using namespace Gooey;
 #include <QtGui/QApplication>
 #include <QtGui/QSplashScreen>
 
-#include <QtGui/QPlastiqueStyle>
-
 int main(int argc, char** argv)
 {
+	common::GooeyStyle style;
+	QApplication::setStyle(&style);
+
 	QApplication app(argc, argv);
 
 	QCoreApplication::setOrganizationName("pixelfr0g");
@@ -70,12 +69,6 @@ int main(int argc, char** argv)
 	qDebug("------------------------------------------------------------");
 	qDebug() << " Pantin-Studio / Starting up on" << QDateTime::currentDateTime().toString();
 	qDebug("------------------------------------------------------------");
-
-#ifdef _K_MACX
-	QApplication::setStyle(new common::GooeyStyle());
-#else
-	QApplication::setStyle(new QPlastiqueStyle());
-#endif
 
 	QSplashScreen splash(QPixmap(":/pantin-studio/images/splash.png"));
 	splash.setVisible(true);

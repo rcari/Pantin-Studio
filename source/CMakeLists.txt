@@ -28,10 +28,7 @@ ELSE( APPLE )
 ENDIF( APPLE )
 
 # -- Qt 4.8.0 minimum --
-FIND_PACKAGE( Qt4 4.8.0 COMPONENTS QtCore QtGui QtOpenGL QtXml REQUIRED )
-# -- Activate proper modules --
-SET( QT_USE_QTOPENGL ON )
-SET( QT_USE_QTXML ON )
+FIND_PACKAGE( Qt4 4.8.0 COMPONENTS QtCore QtGui REQUIRED )
 INCLUDE( ${QT_USE_FILE} )
 
 # -- Doxygen --
