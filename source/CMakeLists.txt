@@ -77,11 +77,10 @@ SET( PantinStudio_SRCS	src/Pantin.cpp )
 # Target executable: PantinStudio
 # Mac OS specifics
 IF( APPLE )
-	SET( MACOSX_BUNDLE_ICON_FILE nigel.icns )
-	SET_SOURCE_FILES_PROPERTIES( ../resources/images/icons/nigel.icns
-		PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	ADD_EXECUTABLE( ${PANTIN-STUDIO_EXECUTABLE} MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ../resources/images/icons/nigel.icns )
 	
-	ADD_EXECUTABLE( ${PANTIN-STUDIO_EXECUTABLE} MACOSX_BUNDLE ${PantinStudio_SRCS} ${PantinStudio_RCC} ${CMAKE_CURRENT_SOURCE_DIR}/../resources/images/icons/nigel.icns )
+	SET( MACOSX_BUNDLE_ICON_FILE nigel.icns )
+	SET_SOURCE_FILES_PROPERTIES( ../resources/images/icons/nigel.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 		
 	SET_TARGET_PROPERTIES ( 
 		${PANTIN-STUDIO_EXECUTABLE} PROPERTIES

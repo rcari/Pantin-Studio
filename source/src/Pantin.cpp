@@ -45,8 +45,10 @@ using namespace GLr;
 using namespace Pantin;
 
 #include <GooeyApplication.hpp>
-#include <common/GooeyStyle.hpp>
 using namespace Gooey;
+
+#include <common/GooeyStyle.hpp>
+using namespace Gooey::common;
 
 #include <QtCore/QDateTime>
 #include <QtCore/QtDebug>
@@ -56,10 +58,8 @@ using namespace Gooey;
 
 int main(int argc, char** argv)
 {
-	common::GooeyStyle style;
-	QApplication::setStyle(&style);
-
 	QApplication app(argc, argv);
+	QApplication::setStyle(new GooeyStyle); // QApplication takes ownership of the style!
 
 	QCoreApplication::setOrganizationName("pixelfr0g");
 	QCoreApplication::setOrganizationDomain("pixelfr0g.com");
