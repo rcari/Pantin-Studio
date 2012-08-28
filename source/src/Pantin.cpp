@@ -61,8 +61,8 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	QApplication::setStyle(new GooeyStyle); // QApplication takes ownership of the style!
 
-	QCoreApplication::setOrganizationName("pixelfr0g");
-	QCoreApplication::setOrganizationDomain("pixelfr0g.com");
+	QCoreApplication::setOrganizationName("Moving Pixels Labs");
+	QCoreApplication::setOrganizationDomain("mp-labs.net");
 	QCoreApplication::setApplicationName("Pantin Studio");
 	QCoreApplication::setApplicationVersion(_PANTIN_STUDIO_VERSION);
 
