@@ -16,6 +16,8 @@
 .cproject
 .settings
 
+# Qt Creator files
+*.user
+
 # Build folders
-build
-build64
+build*
