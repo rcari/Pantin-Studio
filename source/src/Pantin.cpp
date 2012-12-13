@@ -56,60 +56,66 @@ using namespace Gooey::common;
 #include <QtGui/QApplication>
 #include <QtGui/QSplashScreen>
 
-int main(int argc, char** argv)
+int main( int argc, char** argv )
 {
-	QApplication app(argc, argv);
-	QApplication::setStyle(new GooeyStyle); // QApplication takes ownership of the style!
+    QApplication app( argc, argv );
+    // QApplication takes ownership of the style!
+    QApplication::setStyle( new GooeyStyle );
 
-	QCoreApplication::setOrganizationName("Moving Pixels Labs");
-	QCoreApplication::setOrganizationDomain("mp-labs.net");
-	QCoreApplication::setApplicationName("Pantin Studio");
-	QCoreApplication::setApplicationVersion(_PANTIN_STUDIO_VERSION);
+    QCoreApplication::setOrganizationName( "Moving Pixel Labs" );
+    QCoreApplication::setOrganizationDomain( "mp-labs.net" );
+    QCoreApplication::setApplicationName( "Pantin Studio" );
+    QCoreApplication::setApplicationVersion( _PANTIN_STUDIO_VERSION );
 
-	qDebug("------------------------------------------------------------");
-	qDebug() << " Pantin-Studio / Starting up on" << QDateTime::currentDateTime().toString();
-	qDebug("------------------------------------------------------------");
+    qDebug("------------------------------------------------------------");
+    qDebug() << " Pantin-Studio / Starting up on"
+             << QDateTime::currentDateTime().toString();
+    qDebug("------------------------------------------------------------");
 
-	QSplashScreen splash(QPixmap(":/pantin-studio/images/splash.png"));
-	splash.setVisible(true);
-	splash.raise();
+    QSplashScreen splash( QPixmap( ":/pantin-studio/images/splash.png" ) );
+    splash.setVisible( true );
+    splash.raise();
 
-	app.processEvents();
+    app.processEvents();
 
-	splash.showMessage("Loading Kore...", Qt::AlignLeft | Qt::AlignBottom);
-	KoreApplication kore(argc, argv);
-	splash.showMessage("Loading Kore... OK", Qt::AlignLeft | Qt::AlignBottom);
+    splash.showMessage( "Loading Kore...", Qt::AlignLeft | Qt::AlignBottom );
+    KoreApplication kore( argc, argv );
+    splash.showMessage( "Loading Kore... OK",
+                        Qt::AlignLeft | Qt::AlignBottom );
 
-	app.processEvents();
+    app.processEvents();
 
-	splash.showMessage("Loading Nigel...", Qt::AlignLeft | Qt::AlignBottom);
-	NigelApplication nigel(argc, argv);
-	splash.showMessage("Loading Nigel... OK", Qt::AlignLeft | Qt::AlignBottom);
+    splash.showMessage( "Loading Nigel...", Qt::AlignLeft | Qt::AlignBottom );
+    NigelApplication nigel( argc, argv );
+    splash.showMessage( "Loading Nigel... OK",
+                        Qt::AlignLeft | Qt::AlignBottom );
 
-	app.processEvents();
+    app.processEvents();
 
-	splash.showMessage("Loading GLr...", Qt::AlignLeft | Qt::AlignBottom);
-	GLrApplication glr(argc, argv);
-	splash.showMessage("Loading GLr... OK", Qt::AlignLeft | Qt::AlignBottom);
+    splash.showMessage( "Loading GLr...", Qt::AlignLeft | Qt::AlignBottom );
+    GLrApplication glr( argc, argv );
+    splash.showMessage( "Loading GLr... OK", Qt::AlignLeft | Qt::AlignBottom );
 
-	app.processEvents();
+    app.processEvents();
 
-	splash.showMessage("Loading Gooey...", Qt::AlignLeft | Qt::AlignBottom);
-	GooeyApplication gooey(argc, argv);
-	splash.showMessage("Loading Gooey... OK", Qt::AlignLeft | Qt::AlignBottom);
+    splash.showMessage( "Loading Gooey...", Qt::AlignLeft | Qt::AlignBottom );
+    GooeyApplication gooey( argc, argv );
+    splash.showMessage( "Loading Gooey... OK",
+                        Qt::AlignLeft | Qt::AlignBottom );
 
-	app.processEvents();
+    app.processEvents();
 
-	splash.showMessage("Loading Pantin...", Qt::AlignLeft | Qt::AlignBottom);
-	PantinApplication pantin(splash);
-	splash.showMessage("Loading Pantin... OK", Qt::AlignLeft | Qt::AlignBottom);
+    splash.showMessage( "Loading Pantin...", Qt::AlignLeft | Qt::AlignBottom );
+    PantinApplication pantin( splash );
+    splash.showMessage( "Loading Pantin... OK",
+                        Qt::AlignLeft | Qt::AlignBottom );
 
-	qDebug() << "Pantin-Studio /" << "Showtime !";
+    qDebug() << "Pantin-Studio /" << "Showtime !";
 
-	int result = app.exec();
+    int result = app.exec();
 
-	// Purge events !
-	app.processEvents();
+    // Purge events !
+    app.processEvents();
 
-	return result;
+    return result;
 }
